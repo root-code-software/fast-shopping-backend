@@ -1,0 +1,519 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "description": "FastShopping Server",
+      "url": "https://fast-shopping-backend.herokuapp.com"
+    },
+    {
+      "description": "FastShopping Server DEV",
+      "url": "http://localhost:8383"
+    }
+  ],
+  "info": {
+    "version": "0.5.0-oas3",
+    "title": "🛒️ FastShopping Server",
+    "description": "# Server to provide Auth and Shop CRUDs\n\n![Logo](https://img.icons8.com/clouds/100/000000/shop.png)\n\nFastShop REST API. Manage shop for Frontend!"
+  },
+  "paths": {
+    "/ping": {
+      "get": {
+        "summary": "Server heartbeat operation",
+        "description": "This operation shows current *status* of server.<br/> If `200` then all ok, if `500` a problem is there.<br/> __Dev Oriented Endpoint__",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Ok"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/api/v1/user": {
+      "summary": "User related operations",
+      "description": "I dont have  id here",
+      "get": {
+        "summary": "Info about /user Endpoint",
+        "description": "Introspection for this resource",
+        "operationId": "getUser",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Info"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "post": {
+        "operationId": "postUser",
+        "summary": "CREATE an User by request",
+        "description": "TODO Add the role LATER",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserCreate201"
+          },
+          "409": {
+            "$ref": "#/components/responses/Email409"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/ClientError"
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v1/user/{idUser}": {
+      "summary": "operations in User from specific email",
+      "description": "Need to have a valid token",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/IdUser"
+        }
+      ],
+      "get": {
+        "operationId": "getUserId",
+        "summary": "READ info about certain user",
+        "description": "provide an email (and a valid token) to get the info of the user the id belongs",
+        "responses": {
+          "200": {
+            "description": "The User Object returned successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User201"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "put": {
+        "operationId": "putUser",
+        "summary": "UPDATE user",
+        "description": "Modify current info of user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "responses": {
+          "201": {
+            "description": "The User Object Updated successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User201"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "DELETE the user",
+        "description": "Give an ID and I will delete the user that belongs to",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Ok"
+          },
+          "404": {
+            "description": "BAD_REQUEST_ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "system",
+      "description": "Non business logic"
+    },
+    {
+      "name": "user",
+      "description": "CRUD operations on Users database"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name with more than 3 letters",
+            "example": "John Doe",
+            "minLength": 3
+          },
+          "email": {
+            "type": "string",
+            "description": "email",
+            "example": "example@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "password with more than 6 and less than 12 alphanumeric symbols",
+            "example": "password123",
+            "minLength": 6,
+            "maxLength": 12
+          },
+          "userType": {
+            "type": "string",
+            "description": "Type of User: \n* `ADMIN` Higher order, deletes and creates USERs\n* `USER` The ones controling systems\n",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "USER"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "Ok": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "object",
+            "description": "object with valuable data"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "errors": {
+            "description": "object with valuable data",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Describe the error",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "ok": false,
+          "msg": "Internal Server Error",
+          "errors": [
+            {
+              "msg": "error1"
+            },
+            {
+              "msg": "error2"
+            },
+            "...otherErrors"
+          ]
+        }
+      },
+      "ClientError": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string"
+          },
+          "errors": {
+            "description": "object with valuable data",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Describe the error",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "ok": false,
+          "msg": "Client Sent Incorrect or incomplete Data",
+          "errors": [
+            {
+              "msg": "error1"
+            },
+            {
+              "msg": "error2"
+            },
+            "...otherErrors"
+          ]
+        }
+      },
+      "User201": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "object",
+            "description": "object with valuable data",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Users201": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Info": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "docsUrl": {
+            "type": "string",
+            "description": "Where to find help"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "description": "User object",
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "ServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ServerError"
+            }
+          }
+        }
+      },
+      "ClientError": {
+        "description": "Client Sent Incorrect or incomplete Data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientError"
+            }
+          }
+        }
+      },
+      "Email409": {
+        "description": "Email already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientError"
+            }
+          }
+        }
+      },
+      "Ok": {
+        "description": "The petition returned successfuly",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Ok"
+            }
+          }
+        }
+      },
+      "UserCreate201": {
+        "description": "User Created Successfuly",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User201"
+            }
+          }
+        }
+      },
+      "Info": {
+        "description": "Info about this path",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Info"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    },
+    "parameters": {
+      "IdUser": {
+        "name": "idUser",
+        "in": "path",
+        "description": "ID of user",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
