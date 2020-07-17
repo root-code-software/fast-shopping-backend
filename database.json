@@ -1,0 +1,18 @@
+{
+  "sql-file": true,
+  "dev": {
+    "driver": "mysql",
+    "ENV": "DEV_DATABASE_URL",
+    "multipleStatements": true
+  },
+  "test": {
+    "driver": "mysql",
+    "ENV": "TEST_DATABASE_URL",
+    "multipleStatements": true
+  },
+  "prod": {
+    "driver": "mysql",
+    "ENV": "DATABASE_URL",
+    "multipleStatements": true
+  }
+}
