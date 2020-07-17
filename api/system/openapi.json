@@ -11,7 +11,7 @@
     }
   ],
   "info": {
-    "version": "0.5.0-oas3",
+    "version": "0.5.1-oas3",
     "title": "🛒️ FastShopping Server",
     "description": "# Server to provide Auth and Shop CRUDs\n\n![Logo](https://img.icons8.com/clouds/100/000000/shop.png)\n\nFastShop REST API. Manage shop for Frontend!"
   },
