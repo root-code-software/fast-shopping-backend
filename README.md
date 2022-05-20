@@ -115,14 +115,14 @@ For more information about the code please check the [code overview](docs/CODE_O
                 </h3>
             </a>
             <a href="https://www.linkedin.com/in/israellaguan/" target="_blank" rel="author">
-                <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="My Linkedin" height="45px">
+                <img src="https://img.icons8.com/color/48/000000/linkedin.png" style="border-radius: 10%" alt="My Linkedin" height="45px">
                 <h3>
                     Connect to my Linkedin
+                    </a>
                 </h3>
             </a>
             <a href="https://github.com/Israel-Laguan" target="_blank" rel="author">
-                <img src="https://img.icons8.com/color/48/000000/github--v1.png" 
-			style="border-radius: 10%" alt="My GitHub" height="45px"
+                <img src="https://img.icons8.com/color/48/000000/github--v1.png" style="border-radius: 10%" alt="My GitHub" height="45px"
 		>
                 <h3>
                     Check my GitHub Profile
