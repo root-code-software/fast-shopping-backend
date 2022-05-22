@@ -94,7 +94,7 @@ For more information about the code please check the [code overview](docs/CODE_O
     <td>
         <div align="center">
             <a href="./docs/img/photo.png" target="_blank" rel="author">
-                <img src="https://avatars2.githubusercontent.com/u/36519478?s=460&v=4" style="border-radius: 10%; min-width: 100px;" alt="Israel Laguan's Photo" width="200px">
+                <img src="https://avatars2.githubusercontent.com/u/36519478?s=460&v=4" min-width: 100px;" alt="Israel Laguan's Photo" width="200px">
             </a>
             <h2>
                 <a href="https://israel-laguan.github.io/" target="_blank" rel="author">
@@ -105,29 +105,31 @@ For more information about the code please check the [code overview](docs/CODE_O
     </td>
     <td>
         <div align="center">
+	<br />														     
             <a href="mailto:israellaguan@gmail.com" target="_blank" rel="author">
-                <img src="https://img.icons8.com/color/48/000000/message-squared.png" style="border-radius: 10%" alt="My GitHub" height="45px">
+                <img src="https://img.icons8.com/color/48/000000/message-squared.png" alt="My Email" height="45px">
                 <h3>
                     Email me to 
-                    <a href="mailto:israellaguan@gmail.com">
                         israellaguan@gmail.com
+		    <a href="mailto:israellaguan@gmail.com">						     
                     </a>
                 </h3>
             </a>
             <a href="https://www.linkedin.com/in/israellaguan/" target="_blank" rel="author">
-                <img src="https://img.icons8.com/color/48/000000/linkedin.png" style="border-radius: 10%" alt="My Linkedin" height="45px">
+                <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="My Linkedin" height="45px">
                 <h3>
                     Connect to my Linkedin
                     </a>
                 </h3>
             </a>
             <a href="https://github.com/Israel-Laguan" target="_blank" rel="author">
-                <img src="https://img.icons8.com/color/48/000000/github--v1.png" style="border-radius: 10%" alt="My GitHub" height="45px"
+                <img src="https://img.icons8.com/color/48/000000/github--v1.png" alt="My GitHub" height="45px"
 		>
                 <h3>
                     Check my GitHub Profile
                 </h3>
             </a>
+	<br />														     
         </div>
     </td>
   </tr>
